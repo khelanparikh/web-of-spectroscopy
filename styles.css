@@ -1,0 +1,668 @@
+/* ---------- Reset / base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a12;
+  --bg-soft: #11111d;
+  --ink: #e8e6df;
+  --ink-dim: #9a9788;
+  --rule: #2a2a3a;
+  --accent: #f5c542;
+  --violet: #6a4cff;
+  --indigo: #3d3bd6;
+  --blue:   #2a8cf2;
+  --green:  #4ac26b;
+  --yellow: #f5c542;
+  --orange: #f08a3c;
+  --red:    #e64545;
+  --col-obs:  #4ac26b;
+  --col-theo: #6a9cff;
+  --col-tech: #f08a3c;
+  --col-disc: #8a8a99;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Palatino Linotype", "Palatino", "Hoefler Text", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  padding: 4rem 2rem;
+  background:
+    radial-gradient(ellipse at top, rgba(106,76,255,0.10), transparent 60%),
+    radial-gradient(ellipse at bottom, rgba(245,197,66,0.08), transparent 60%),
+    var(--bg);
+}
+
+.spectrum-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(
+    to right,
+    var(--violet), var(--indigo), var(--blue),
+    var(--green), var(--yellow), var(--orange), var(--red)
+  );
+  filter: saturate(0.85);
+}
+
+.grand-title {
+  font-family: "Didot", "Bodoni 72", "Hoefler Text", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(3.5rem, 11vw, 9rem);
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  margin-bottom: 2rem;
+  background: linear-gradient(180deg, #fff 0%, #d8d3c3 60%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.grand-title .of {
+  font-style: italic;
+  font-size: 0.5em;
+  letter-spacing: 0.05em;
+  color: var(--ink-dim);
+  -webkit-text-fill-color: var(--ink-dim);
+  display: inline-block;
+  margin: 0.2em 0;
+}
+
+.subtitle {
+  font-style: italic;
+  color: var(--ink-dim);
+  font-size: 1.15rem;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  animation: bob 2.4s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0);  opacity: 0.6; }
+  50%      { transform: translateY(6px); opacity: 1.0; }
+}
+
+/* ---------- Era rail (right side) ---------- */
+.era-rail {
+  position: fixed;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.era-rail.visible { opacity: 1; }
+
+.era-track {
+  position: relative;
+  width: 130px;
+  height: 360px;
+  border-left: 1px solid var(--rule);
+  padding-left: 0.7rem;
+}
+
+.era-list {
+  list-style: none;
+  position: relative;
+  height: 100%;
+}
+
+.era-list li {
+  position: absolute;
+  left: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  transition: color 0.3s ease, top 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+}
+
+.era-list li.active {
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+.era-marker {
+  position: absolute;
+  left: -5px;
+  top: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(245,197,66,0.6);
+  transition: top 0.3s cubic-bezier(.4,.0,.2,1);
+}
+
+.era-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  color: var(--ink-dim);
+  font-family: "Didot", "Bodoni 72", "Hoefler Text", Georgia, serif;
+}
+.era-readout-label { font-size: 0.9rem; }
+.era-readout-value {
+  font-size: 1.05rem;
+  font-variant-numeric: oldstyle-nums;
+  color: var(--ink);
+}
+
+/* ---------- Timeline canvas ---------- */
+.timeline-canvas {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 8rem;
+  min-height: 6400px;
+}
+
+.column-headers {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 1rem 0;
+  background: linear-gradient(
+    to bottom,
+    var(--bg) 0%,
+    var(--bg) 70%,
+    rgba(10,10,18,0) 100%
+  );
+  margin-bottom: 2rem;
+}
+
+.col-head {
+  text-align: center;
+  font-family: "Didot", "Bodoni 72", "Hoefler Text", Georgia, serif;
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+.col-head.obs   { color: var(--col-obs);  border-color: rgba(74,194,107,0.4); }
+.col-head.theo  { color: var(--col-theo); border-color: rgba(106,156,255,0.4); }
+.col-head.tech  { color: var(--col-tech); border-color: rgba(240,138,60,0.4); }
+.col-head.disc  { color: var(--col-disc); border-color: rgba(138,138,153,0.4); opacity: 0.75; font-style: italic; }
+
+/* Vertical thread per column */
+.col-thread {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--rule) 6%,
+    var(--rule) 94%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+.obs-thread  { left: 12.5%; }
+.theo-thread { left: 37.5%; }
+.tech-thread { left: 62.5%; }
+.disc-thread { left: 87.5%; opacity: 0.5; }
+
+/* ---------- SVG connection layer ---------- */
+.connections {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+.connections path {
+  fill: none;
+  stroke: rgba(154, 151, 136, 0.18);
+  stroke-width: 1;
+  stroke-dasharray: 4 5;
+  transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+.connections path.highlight {
+  stroke: rgba(245, 197, 66, 0.55);
+  stroke-width: 1.4;
+  stroke-dasharray: 5 4;
+}
+
+/* ---------- Entry card (compact) ---------- */
+.entry {
+  position: absolute;
+  width: 220px;
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 0.75rem 0.9rem 0.85rem 1rem;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease,
+              border-color 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  z-index: 1;
+}
+.entry:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.entry.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.entry:hover {
+  border-color: rgba(245, 197, 66, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  z-index: 3;
+}
+
+.entry::before {
+  /* coloured left-edge stripe, column indicator */
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 3px;
+  border-radius: 4px 0 0 4px;
+  background: var(--accent);
+  opacity: 0.85;
+}
+
+.entry[data-col="observation"]::before { background: var(--col-obs);  }
+.entry[data-col="theory"]::before      { background: var(--col-theo); }
+.entry[data-col="technique"]::before   { background: var(--col-tech); }
+.entry[data-col="discoveries"]::before { background: var(--col-disc); }
+
+.entry[data-col="observation"].in-view { border-color: rgba(74,194,107,0.40); }
+.entry[data-col="theory"].in-view      { border-color: rgba(106,156,255,0.40); }
+.entry[data-col="technique"].in-view   { border-color: rgba(240,138,60,0.40); }
+.entry[data-col="discoveries"].in-view { border-color: rgba(138,138,153,0.35); }
+
+.entry-title {
+  font-family: "Didot", "Bodoni 72", "Hoefler Text", Georgia, serif;
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  letter-spacing: 0.005em;
+  margin-bottom: 0.15rem;
+  color: #f4f1e8;
+  padding-right: 2rem; /* space for medal */
+}
+
+.entry .who {
+  font-style: italic;
+  color: var(--ink-dim);
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+}
+
+/* Tiny corner thumbnail inside compact card — absolute so it doesn't
+   change the card's flow size. Reserve space on the .who line so its
+   text doesn't run into the image. */
+.entry-image {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  width: 44px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 2px;
+  opacity: 0.65;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  background: #000;
+}
+.entry:hover .entry-image { opacity: 1; }
+.entry:has(.entry-image) .who { padding-right: 52px; }
+
+/* Larger version of the same image inside the modal */
+.entry-modal-image {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 1.1rem;
+  background: #000;
+}
+
+/* Discoveries column: greyed out */
+.entry.discovery {
+  background: rgba(17, 17, 29, 0.55);
+  border-color: rgba(42, 42, 58, 0.6);
+  color: var(--ink-dim);
+}
+.entry.discovery .entry-title {
+  color: #c8c5b8;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+.entry.discovery .who {
+  color: rgba(154, 151, 136, 0.75);
+  font-size: 0.74rem;
+}
+.entry.discovery:hover {
+  border-color: rgba(245, 197, 66, 0.45);
+  background: var(--bg-soft);
+  color: var(--ink);
+}
+.entry.discovery .entry-title:hover { color: #f4f1e8; }
+
+/* ---------- Nobel medal ---------- */
+.nobel-medal {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 0 2px;
+  text-decoration: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #fff1b3 0%, #f1c233 45%, #8a6510 100%);
+  box-shadow:
+    0 0 0 2px var(--bg-soft),
+    0 0 0 3px rgba(245,197,66,0.55),
+    0 4px 10px rgba(0,0,0,0.55);
+  color: #4a3300;
+  font-family: "Didot", "Bodoni 72", "Hoefler Text", Georgia, serif;
+  font-weight: 700;
+  line-height: 1;
+  z-index: 4;
+  transition: transform 0.2s ease;
+}
+.nobel-medal::before {
+  content: "\2605";  /* ★ */
+  font-size: 0.55rem;
+  color: rgba(74, 51, 0, 0.6);
+  margin-bottom: 1px;
+}
+.nobel-medal .nobel-year {
+  font-size: 0.5rem;
+  letter-spacing: 0.02em;
+}
+.nobel-medal:hover { transform: scale(1.12); }
+
+/* ---------- Era boundary lines (dotted, faint, full-width) ---------- */
+.era-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 1px dashed rgba(154, 151, 136, 0.22);
+  pointer-events: none;
+  z-index: 0;
+}
+.era-line::before {
+  content: attr(data-label);
+  position: absolute;
+  left: 50%;
+  top: -0.7rem;
+  transform: translateX(-50%);
+  padding: 0.12rem 0.75rem;
+  background: var(--bg);
+  color: rgba(154, 151, 136, 0.55);
+  font-family: "Didot", "Bodoni 72", "Hoefler Text", Georgia, serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---------- Red event lines (QM, Ruby Laser) ---------- */
+.event-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 2px solid rgba(230, 69, 69, 0.65);
+  pointer-events: none;
+  z-index: 2;
+}
+.event-line-label {
+  position: absolute;
+  left: 50%;
+  top: -0.85rem;
+  transform: translateX(-50%);
+  padding: 0.18rem 0.8rem;
+  background: var(--bg);
+  border: 1px solid rgba(230, 69, 69, 0.65);
+  color: #ffb0b0;
+  font-family: "Didot", "Bodoni 72", "Hoefler Text", Georgia, serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  pointer-events: auto;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+a.event-line-label:hover {
+  color: #fff;
+  border-color: rgba(230, 69, 69, 1);
+  background: rgba(230, 69, 69, 0.2);
+}
+
+/* ---------- Modal ---------- */
+.entry-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.entry-modal[hidden] { display: none; }
+
+.entry-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  animation: modalFadeIn 0.25s ease;
+}
+
+.entry-modal-content {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--bg-soft);
+  border: 1px solid rgba(245, 197, 66, 0.25);
+  border-radius: 10px;
+  padding: 2.2rem 2.4rem 2rem;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  animation: modalRise 0.3s cubic-bezier(.4,.0,.2,1);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes modalRise {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+.entry-modal-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.85rem;
+  background: transparent;
+  border: none;
+  color: var(--ink-dim);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.4rem 0.55rem;
+  border-radius: 4px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.entry-modal-close:hover { color: var(--ink); background: rgba(255,255,255,0.05); }
+
+.entry-modal-year {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  font-variant-numeric: oldstyle-nums;
+}
+
+.entry-modal-title {
+  font-family: "Didot", "Bodoni 72", "Hoefler Text", Georgia, serif;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+  color: #f4f1e8;
+}
+
+.entry-modal-who {
+  font-style: italic;
+  color: var(--ink-dim);
+  font-size: 1rem;
+  margin-bottom: 1.3rem;
+}
+
+.entry-modal-body {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.entry-modal-body sup a { color: var(--accent); text-decoration: none; margin-left: 1px; }
+.entry-modal-body sup a:hover { text-decoration: underline; }
+
+.see-also {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+  font-style: italic;
+}
+.see-also a.see-link {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(245, 197, 66, 0.5);
+  padding-bottom: 1px;
+}
+.see-also a.see-link:hover { color: #fff; border-bottom-color: #fff; }
+
+.entry-modal-nobel {
+  display: inline-block;
+  margin-top: 1.3rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f1c233, #8a6510);
+  color: #2a1d00;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.entry-modal-nobel:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.5); }
+
+/* ---------- References ---------- */
+.references {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-dim);
+  font-size: 0.92rem;
+}
+.references h2 {
+  font-family: "Didot", "Bodoni 72", "Hoefler Text", Georgia, serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.02em;
+}
+.references ol { padding-left: 1.4rem; }
+.references li { margin-bottom: 0.7rem; line-height: 1.55; }
+.references li:target {
+  color: var(--ink);
+  background: rgba(245, 197, 66, 0.08);
+  padding-left: 0.4rem;
+  border-left: 2px solid var(--accent);
+}
+.colophon {
+  margin-top: 2rem;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .era-rail { display: none; }
+  .column-headers { display: none; }
+  .col-thread { display: none; }
+  .connections { display: none; }
+
+  .timeline-canvas {
+    min-height: 0 !important;
+    padding: 2rem 1rem 4rem;
+  }
+  .entry {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: auto;
+    max-width: 520px;
+    margin: 0 auto 1.5rem;
+    opacity: 1;
+    transform: none;
+  }
+  .event-line {
+    position: relative !important;
+    top: auto !important;
+    margin: 2rem 0 2.5rem;
+  }
+  .entry-modal-content { padding: 1.8rem 1.5rem 1.5rem; }
+  .entry-modal-title { font-size: 1.6rem; }
+}

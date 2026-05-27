@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Web of Spectroscopy</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="spectrum-bar"></div>
+  <h1 class="grand-title">The Web<br><span class="of">of</span><br>Spectroscopy</h1>
+  <p class="subtitle">A scrolling history of how humanity learned to read light.</p>
+  <p class="scroll-hint">scroll &darr;</p>
+</header>
+
+<aside class="era-rail" id="eraRail" aria-hidden="true">
+  <div class="era-track">
+    <div class="era-marker" id="eraMarker"></div>
+    <ul class="era-list">
+      <li data-from="-2000" data-to="500">Ancient</li>
+      <li data-from="500" data-to="1450">Medieval</li>
+      <li data-from="1450" data-to="1700">Renaissance</li>
+      <li data-from="1700" data-to="1850">Enlightenment</li>
+      <li data-from="1850" data-to="1950">Modern</li>
+      <li data-from="1950" data-to="2030">Contemporary</li>
+    </ul>
+  </div>
+  <div class="era-readout">
+    <span class="era-readout-label">&asymp;</span>
+    <span class="era-readout-value" id="eraReadout">&mdash;</span>
+  </div>
+</aside>
+
+<main class="timeline-canvas" id="canvas">
+
+  <div class="column-headers">
+    <div class="col-head obs">Observation</div>
+    <div class="col-head theo">Theory</div>
+    <div class="col-head tech">Technique</div>
+    <div class="col-head disc">Discoveries</div>
+  </div>
+
+  <svg class="connections" id="connections" aria-hidden="true"></svg>
+
+  <!-- Column threads (vertical lines) -->
+  <div class="col-thread obs-thread"  aria-hidden="true"></div>
+  <div class="col-thread theo-thread" aria-hidden="true"></div>
+  <div class="col-thread tech-thread" aria-hidden="true"></div>
+  <div class="col-thread disc-thread" aria-hidden="true"></div>
+
+  <!-- ====================================================== -->
+  <!--  OBSERVATION / THEORY / TECHNIQUE entries              -->
+  <!-- ====================================================== -->
+
+  <article class="entry" data-year="-1500" data-col="observation" id="ancient-egypt" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Pigments &amp; the Rainbow</h2>
+    <p class="who">Egyptian artisans</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">c. 1500 BCE</div>
+      <div class="entry-body">Egyptian glassmakers produced coloured pigments and treated the rainbow as a phenomenon worthy of record &mdash; humanity's earliest engagement with the decomposition of colour.<sup><a href="#ref1">[1]</a></sup></div>
+    </div>
+  </article>
+
+  <article class="entry" data-year="-585" data-col="observation" id="thales" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Reflection in Water Vessels</h2>
+    <p class="who">Thales of Miletus</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">c. 585 BCE</div>
+      <div class="entry-body">Thales is credited with the earliest Greek investigations of reflection and magnification through water-filled vessels, beginning a tradition of treating light as a subject of study.<sup><a href="#ref2">[2]</a></sup></div>
+    </div>
+  </article>
+
+  <article class="entry" data-year="-400" data-col="theory" id="mozi" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Pinhole Camera</h2>
+    <p class="who">Mo Zi &amp; the Mohists</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">c. 400 BCE</div>
+      <div class="entry-body">The <em>Mojing</em> describes pinhole cameras, image inversion, and the rectilinear propagation of light &mdash; arguably the world's first systematic optics.<sup><a href="#ref3">[3]</a></sup></div>
+    </div>
+  </article>
+
+  <article class="entry" data-year="50" data-col="theory" id="cleomedes" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Atmospheric Refraction</h2>
+    <p class="who">Cleomedes</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">c. 50 CE</div>
+      <div class="entry-body">Cleomedes describes the bending of light entering the atmosphere and uses it to explain why the Sun remains visible when geometrically below the horizon.<sup><a href="#ref4">[4]</a></sup></div>
+    </div>
+  </article>
+
+  <article class="entry" data-year="150" data-col="observation" id="ptolemy" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Tables of Refraction</h2>
+    <p class="who">Claudius Ptolemy</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">c. 150 CE</div>
+      <div class="entry-body">Ptolemy's <em>Optics</em> contains the first known quantitative tables of refraction angles for air&ndash;water and air&ndash;glass &mdash; a precursor to Snell's law.<sup><a href="#ref5">[5]</a></sup></div>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1267" data-col="theory" id="bacon" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Theory of the Rainbow</h2>
+    <p class="who">Roger Bacon</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">c. 1267</div>
+      <div class="entry-body">In the <em>Opus Majus</em>, Bacon analyses the rainbow as the product of refraction within droplets and insists on experiment as the route to natural knowledge.<sup><a href="#ref6">[6]</a></sup></div>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1666" data-col="observation" id="spectrum" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">The Visible Spectrum</h2>
+    <p class="who">Isaac Newton</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1666</div>
+      <div class="entry-body">Newton's prism &mdash; and the second prism that recombined the colours &mdash; showed that white light is a heterogeneous mixture of rays. He coined the word <em>spectrum</em>.<sup><a href="#ref7">[7]</a></sup></div>
+      <p class="see-also">See <a href="#bacon" class="see-link">Theory of the Rainbow</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1802" data-col="observation" id="dark-lines" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Dark Lines in Sunlight</h2>
+    <p class="who">William Hyde Wollaston</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1802</div>
+      <div class="entry-body">Using a narrow slit rather than a round aperture, Wollaston was the first to see dark lines crossing the solar spectrum &mdash; though he mistook them for natural boundaries between colours.<sup><a href="#ref8">[8]</a></sup></div>
+      <p class="see-also">See <a href="#fraunhofer" class="see-link">The Diffraction Grating</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1814" data-col="technique" id="fraunhofer" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">The Diffraction Grating</h2>
+    <p class="who">Joseph von Fraunhofer</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1814</div>
+      <div class="entry-body">Fraunhofer mapped 574 dark lines in the solar spectrum with unprecedented precision and built ruled gratings that turned spectroscopy into a quantitative science.<sup><a href="#ref9">[9]</a></sup></div>
+      <p class="see-also">See <a href="#dark-lines" class="see-link">Dark Lines in Sunlight</a> &middot; <a href="#spectral-analysis" class="see-link">Spectral Analysis of Elements</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1859" data-col="theory" id="spectral-analysis" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Spectral Analysis of Elements</h2>
+    <p class="who">Kirchhoff &amp; Bunsen</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1859</div>
+      <div class="entry-body">Each chemical element emits and absorbs at a characteristic set of wavelengths. Kirchhoff and Bunsen turned this into the founding principle of analytical spectroscopy and discovered caesium and rubidium by spectrum alone.<sup><a href="#ref10">[10]</a></sup></div>
+      <p class="see-also">See <a href="#fraunhofer" class="see-link">The Diffraction Grating</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1885" data-col="theory" id="balmer" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Balmer Formula</h2>
+    <p class="who">Johann Balmer</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1885</div>
+      <div class="entry-body">A Swiss schoolteacher found that the visible hydrogen lines fit a simple integer formula &mdash; the first hint that atomic spectra encode discrete structure.<sup><a href="#ref11">[11]</a></sup></div>
+      <p class="see-also">See <a href="#rydberg" class="see-link">Rydberg Formula</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1888" data-col="theory" id="rydberg" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Rydberg Formula</h2>
+    <p class="who">Johannes Rydberg</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1888</div>
+      <div class="entry-body">Rydberg generalised Balmer's relation to a universal formula for the spectral lines of hydrogen-like ions, introducing the constant that still bears his name.<sup><a href="#ref12">[12]</a></sup></div>
+      <p class="see-also">See <a href="#balmer" class="see-link">Balmer Formula</a> &middot; <a href="#quantised-atom" class="see-link">Quantised Atom</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1913" data-col="theory" id="quantised-atom" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="1922" data-nobel-url="https://www.nobelprize.org/prizes/physics/1922/bohr/facts/">
+    <h2 class="entry-title">Quantised Atom</h2>
+    <p class="who">Niels Bohr</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1913</div>
+      <div class="entry-body">Bohr's quantised model of the atom derived the Rydberg formula from first principles, binding spectroscopy to the emerging quantum theory.<sup><a href="#ref13">[13]</a></sup></div>
+      <p class="see-also">See <a href="#rydberg" class="see-link">Rydberg Formula</a> &middot; <a href="#balmer" class="see-link">Balmer Formula</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1896" data-col="observation" id="zeeman" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="1902" data-nobel-url="https://www.nobelprize.org/prizes/physics/1902/zeeman/facts/">
+    <h2 class="entry-title">Zeeman Effect</h2>
+    <p class="who">Pieter Zeeman</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1896</div>
+      <div class="entry-body">Sodium D lines split into several components when the source sat between the poles of an electromagnet. Lorentz's classical electron theory accounted for the "normal" splitting; the "anomalous" pattern resisted explanation until the discovery of electron spin in 1925 &mdash; and Zeeman splittings later became the textbook first application of quantum-mechanical perturbation theory.<sup><a href="#ref22">[22]</a></sup></div>
+      <p class="see-also">See <a href="#stark" class="see-link">Stark Effect</a> &middot; <a href="#quantised-atom" class="see-link">Quantised Atom</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1913" data-col="observation" id="stark" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="1919" data-nobel-url="https://www.nobelprize.org/prizes/physics/1919/stark/facts/">
+    <h2 class="entry-title">Stark Effect</h2>
+    <p class="who">Johannes Stark</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1913</div>
+      <div class="entry-body">The electric analogue of the Zeeman effect: hydrogen lines split when atoms were placed in strong electric fields. Quantitative agreement between Schr&ouml;dinger's first-order perturbation calculation (1926) and Stark's measurements became one of the earliest decisive experimental tests of the new quantum mechanics.<sup><a href="#ref23">[23]</a></sup></div>
+      <p class="see-also">See <a href="#zeeman" class="see-link">Zeeman Effect</a> &middot; <a href="#quantised-atom" class="see-link">Quantised Atom</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1928" data-col="observation" id="raman-scattering" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="1930" data-nobel-url="https://www.nobelprize.org/prizes/physics/1930/raman/facts/">
+    <h2 class="entry-title">Raman Scattering</h2>
+    <p class="who">C. V. Raman</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1928</div>
+      <div class="entry-body">The inelastic scattering of light by molecules opened a window onto vibrational and rotational structure &mdash; a major branch of modern spectroscopy.<sup><a href="#ref14">[14]</a></sup></div>
+      <p class="see-also">See <a href="#stim-raman" class="see-link">Stimulated Raman Scattering</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1931" data-col="technique" id="electron-microscope" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="1986" data-nobel-url="https://www.nobelprize.org/prizes/physics/1986/ruska/facts/">
+    <h2 class="entry-title">Electron Microscope</h2>
+    <p class="who">Ruska &amp; Knoll</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1931</div>
+      <div class="entry-body">Replacing photons with focused electron beams, Ruska and Knoll built an imaging system that broke the diffraction limit of visible light by orders of magnitude &mdash; opening the atomic-scale world to direct observation.<sup><a href="#ref19">[19]</a></sup></div>
+      <p class="see-also">See <a href="#eels" class="see-link">Electron Energy-Loss Spectroscopy</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1944" data-col="technique" id="eels" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Electron Energy-Loss Spectroscopy</h2>
+    <p class="who">Hillier &amp; Baker</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1944</div>
+      <div class="entry-body">By measuring the energy electrons lose as they pass through a thin sample, EELS turned the transmission electron microscope into a spectroscope &mdash; mapping elemental composition and chemical bonding at sub-nanometre resolution.<sup><a href="#ref20">[20]</a></sup></div>
+      <p class="see-also">See <a href="#electron-microscope" class="see-link">Electron Microscope</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1947" data-col="observation" id="lamb-shift" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="1955" data-nobel-url="https://www.nobelprize.org/prizes/physics/1955/lamb/facts/">
+    <h2 class="entry-title">Lamb Shift</h2>
+    <p class="who">Willis Lamb &amp; Robert Retherford</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1947</div>
+      <div class="entry-body">A 1058 MHz microwave splitting between the 2S<sub>1/2</sub> and 2P<sub>1/2</sub> levels of hydrogen &mdash; predicted to be exactly degenerate by Dirac &mdash; could only be explained by the atom's interaction with the fluctuating quantum vacuum. The measurement triggered Bethe's first renormalisation calculation and birthed modern quantum electrodynamics (QED).<sup><a href="#ref24">[24]</a></sup></div>
+      <p class="see-also">See <a href="#quantised-atom" class="see-link">Quantised Atom</a> &middot; <a href="#stark" class="see-link">Stark Effect</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1946" data-col="technique" id="nmr" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="1952" data-nobel-url="https://www.nobelprize.org/prizes/physics/1952/summary/">
+    <h2 class="entry-title">Nuclear Magnetic Resonance</h2>
+    <p class="who">Bloch &amp; Purcell</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1946</div>
+      <div class="entry-body">Independent groups detected resonant absorption of radio-frequency photons by nuclear spins in a magnetic field, founding NMR spectroscopy and, eventually, MRI.<sup><a href="#ref15">[15]</a></sup></div>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1948" data-col="technique" id="fret" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">FRET Spectroscopy</h2>
+    <p class="who">Theodor F&ouml;rster</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1948</div>
+      <div class="entry-body">F&ouml;rster predicted that an excited fluorophore can transfer energy non-radiatively to a nearby acceptor, with efficiency falling as 1/r<sup>6</sup>. FRET turned fluorescence into a molecular "ruler" for distances of 1&ndash;10 nm &mdash; now central to single-molecule biology.<sup><a href="#ref21">[21]</a></sup></div>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1962" data-col="technique" id="stim-raman" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Stimulated Raman Scattering</h2>
+    <p class="who">Woodbury &amp; Ng</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1962</div>
+      <div class="entry-body">Pumping a ruby laser through nitrobenzene produced a coherent, amplified Stokes beam &mdash; the discovery of stimulated Raman scattering and the basis of coherent Raman spectroscopies (CARS, SRS microscopy).<sup><a href="#ref16">[16]</a></sup></div>
+      <p class="see-also">See <a href="#raman-scattering" class="see-link">Raman Scattering</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="2000" data-col="technique" id="frequency-comb" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="2005" data-nobel-url="https://www.nobelprize.org/prizes/physics/2005/summary/">
+    <h2 class="entry-title">Optical Frequency Comb</h2>
+    <p class="who">H&auml;nsch &amp; Hall</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">c. 2000</div>
+      <div class="entry-body">A femtosecond laser becomes a ruler for light, linking microwave atomic clocks to optical transitions and enabling spectroscopy at fractional precisions of 10<sup>&minus;18</sup>.<sup><a href="#ref17">[17]</a></sup></div>
+      <p class="see-also">See <a href="#quantum-logic" class="see-link">Quantum Logic Spectroscopy</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="2005" data-col="technique" id="quantum-logic" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="2012" data-nobel-url="https://www.nobelprize.org/prizes/physics/2012/wineland/facts/">
+    <h2 class="entry-title">Quantum Logic Spectroscopy</h2>
+    <p class="who">Schmidt, Rosenband, Wineland</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">2005</div>
+      <div class="entry-body">A co-trapped "logic" ion reads out a spectroscopy ion that cannot be laser-cooled or detected directly &mdash; the technique behind today's most accurate optical clocks.<sup><a href="#ref18">[18]</a></sup></div>
+      <p class="see-also">See <a href="#frequency-comb" class="see-link">Optical Frequency Comb</a></p>
+    </div>
+  </article>
+
+  <!-- Contemporary additions -->
+
+  <article class="entry" data-year="1984" data-col="theory" id="tddft" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Time-Dependent DFT</h2>
+    <p class="who">Runge &amp; Gross</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1984</div>
+      <div class="entry-body">Runge and Gross extended Kohn's density-functional theory to time-dependent external fields, providing a rigorous framework for computing optical absorption spectra, photoionisation cross-sections, and excited-state dynamics of molecules and materials from first principles. TDDFT is now the workhorse for predicting the electronic spectra of everything from dyes to catalysts.<sup><a href="#ref25">[25]</a></sup></div>
+      <p class="see-also">See <a href="#spectral-analysis" class="see-link">Spectral Analysis of Elements</a> &middot; <a href="#quantised-atom" class="see-link">Quantised Atom</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1986" data-col="theory" id="coherent-control" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Coherent Control</h2>
+    <p class="who">Brumer &amp; Shapiro; Tannor &amp; Rice</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1986</div>
+      <div class="entry-body">By driving an atom or molecule with two phase-locked laser fields whose interference paths to a final state can be tuned, the branching ratio between competing photochemical outcomes becomes a control parameter. The theory launched a generation of pulse-shaping experiments in chemistry, attoscience and quantum information.<sup><a href="#ref26">[26]</a></sup></div>
+      <p class="see-also">See <a href="#frequency-comb" class="see-link">Optical Frequency Comb</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="2002" data-col="theory" id="attosecond-theory" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">High-Harmonic &amp; Attosecond Theory</h2>
+    <p class="who">Corkum; Lewenstein</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">c. 1993&ndash;2002</div>
+      <div class="entry-body">Corkum's "three-step model" (ionise, accelerate, recombine) and the Lewenstein quantum extension explained how an intense laser field can up-convert an atom's own electron into trains of attosecond XUV bursts &mdash; the theoretical foundation of attosecond spectroscopy and the 2023 Physics Nobel.<sup><a href="#ref27">[27]</a></sup></div>
+      <p class="see-also">See <a href="#coherent-control" class="see-link">Coherent Control</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1988" data-col="technique" id="crds" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Cavity Ring-Down Spectroscopy</h2>
+    <p class="who">O'Keefe &amp; Deacon</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1988</div>
+      <div class="entry-body">A laser pulse rattles between two ultra-high-reflectivity mirrors thousands of times; an absorber in the cavity shortens the exponential decay of the light leaking out. Measuring a decay <em>time</em> rather than a small intensity difference pushed absorption sensitivities below 10<sup>&minus;9</sup> per pass &mdash; now standard for trace-gas detection and atmospheric monitoring.<sup><a href="#ref28">[28]</a></sup></div>
+      <p class="see-also">See <a href="#fraunhofer" class="see-link">The Diffraction Grating</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1997" data-col="technique" id="sm-sers" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Single-Molecule SERS</h2>
+    <p class="who">Nie &amp; Emory; Kneipp et al.</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1997</div>
+      <div class="entry-body">A single molecule adsorbed on a silver-nanoparticle "hot spot" lights up by factors of 10<sup>14</sup>&ndash;10<sup>15</sup>, making its Raman fingerprint detectable one molecule at a time. Surface-enhanced Raman scattering at the single-molecule limit turned a niche analytical method into a route for label-free chemical imaging of biological systems.<sup><a href="#ref29">[29]</a></sup></div>
+      <p class="see-also">See <a href="#raman-scattering" class="see-link">Raman Scattering</a> &middot; <a href="#stim-raman" class="see-link">Stimulated Raman Scattering</a></p>
+    </div>
+  </article>
+
+  <article class="entry" data-year="1995" data-col="observation" id="bec" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="2001" data-nobel-url="https://www.nobelprize.org/prizes/physics/2001/summary/">
+    <h2 class="entry-title">Bose-Einstein Condensation</h2>
+    <p class="who">Cornell, Wieman, Ketterle</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1995</div>
+      <div class="entry-body">Laser cooling, evaporative cooling, and absorption-imaging spectroscopy revealed a sharp, narrow peak in the momentum distribution of trapped rubidium and sodium atoms &mdash; the matter-wave analogue of a laser. BECs are now a standard platform for studying quantum many-body physics.<sup><a href="#ref30">[30]</a></sup></div>
+    </div>
+  </article>
+
+  <article class="entry" data-year="2017" data-col="observation" id="antihydrogen" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Antihydrogen 1S&ndash;2S</h2>
+    <p class="who">ALPHA Collaboration</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">2017</div>
+      <div class="entry-body">After trapping a few hundred atoms of antihydrogen for hundreds of seconds at CERN, ALPHA drove the 1S&ndash;2S transition with a stabilised laser and matched its frequency to ordinary hydrogen at the part-in-10<sup>12</sup> level &mdash; the most precise spectroscopy ever performed on antimatter, and a stringent test of CPT symmetry.<sup><a href="#ref31">[31]</a></sup></div>
+      <p class="see-also">See <a href="#quantised-atom" class="see-link">Quantised Atom</a> &middot; <a href="#lamb-shift" class="see-link">Lamb Shift</a> &middot; <a href="#frequency-comb" class="see-link">Optical Frequency Comb</a></p>
+    </div>
+  </article>
+
+  <!-- ====================================================== -->
+  <!--  DISCOVERIES column (fun facts; faint connecting lines) -->
+  <!-- ====================================================== -->
+
+  <article class="entry discovery" data-year="1868" data-col="discoveries" id="d-helium" data-connects-to="fraunhofer spectral-analysis" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Helium on the Sun</h2>
+    <p class="who">Janssen &amp; Lockyer</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1868</div>
+      <div class="entry-body">A bright yellow line in the Sun's chromosphere (later labelled D<sub>3</sub>) did not match any known terrestrial element. Lockyer named the inferred element after the Greek <em>h&eacute;lios</em> &mdash; 27 years before it was found on Earth. The first element ever discovered off-planet.</div>
+    </div>
+  </article>
+
+  <article class="entry discovery" data-year="1925" data-col="discoveries" id="d-payne" data-connects-to="spectral-analysis quantised-atom" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Stars are Mostly Hydrogen</h2>
+    <p class="who">Cecilia Payne</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1925</div>
+      <div class="entry-body">Payne's doctoral thesis applied Saha's ionisation equation to stellar spectra and concluded that stars are overwhelmingly hydrogen and helium &mdash; a result her examiners initially called "clearly impossible," and which reshaped twentieth-century astrophysics.</div>
+    </div>
+  </article>
+
+  <article class="entry discovery" data-year="1929" data-col="discoveries" id="d-hubble" data-connects-to="spectral-analysis fraunhofer" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">An Expanding Universe</h2>
+    <p class="who">Edwin Hubble</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1929</div>
+      <div class="entry-body">Spectral lines of distant galaxies are systematically redshifted in proportion to their distance &mdash; the empirical signature of cosmic expansion and the seed of Big Bang cosmology. Without spectroscopy there is no Hubble&ndash;Lema&icirc;tre law.</div>
+    </div>
+  </article>
+
+  <article class="entry discovery" data-year="1965" data-col="discoveries" id="d-cmb" data-connects-to="spectral-analysis" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="1978" data-nobel-url="https://www.nobelprize.org/prizes/physics/1978/summary/">
+    <h2 class="entry-title">Cosmic Microwave Background</h2>
+    <p class="who">Penzias &amp; Wilson</p>
+    <img class="entry-image" src="images/cosmic_microwave_background.jpeg" alt="Cosmic microwave background sky map" loading="lazy">
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1965</div>
+      <div class="entry-body">A persistent 3 K microwave hiss in a Bell Labs horn antenna &mdash; independent of direction or season &mdash; turned out to be the redshifted, near-perfect blackbody spectrum of the early universe. COBE/FIRAS later measured the spectrum to one part in 10<sup>5</sup>.</div>
+    </div>
+  </article>
+
+  <article class="entry discovery" data-year="1973" data-col="discoveries" id="d-mri" data-connects-to="nmr" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="2003" data-nobel-url="https://www.nobelprize.org/prizes/medicine/2003/summary/">
+    <h2 class="entry-title">MRI</h2>
+    <p class="who">Lauterbur &amp; Mansfield</p>
+    <img class="entry-image" src="images/MRI.jpg" alt="An MRI brain scan" loading="lazy">
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">1973</div>
+      <div class="entry-body">Adding magnetic-field gradients to NMR turns the spin signal into a 3-D map of soft tissue. From a <em>Nature</em> paper in 1973 to a workhorse of clinical neurology &mdash; one of the most consequential off-spring of pure spectroscopy.</div>
+    </div>
+  </article>
+
+  <article class="entry discovery" data-year="1978" data-col="discoveries" id="d-darkmatter" data-connects-to="spectral-analysis fraunhofer" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Dark Matter from Rotation Curves</h2>
+    <p class="who">Vera Rubin</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">c. 1978</div>
+      <div class="entry-body">Doppler-shifted hydrogen lines from gas in spiral galaxies showed that orbital velocities stay flat far beyond the visible disc &mdash; implying that most of each galaxy's mass is invisible "dark matter."</div>
+    </div>
+  </article>
+
+  <article class="entry discovery" data-year="2002" data-col="discoveries" id="d-protein" data-connects-to="nmr" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="2002" data-nobel-url="https://www.nobelprize.org/prizes/chemistry/2002/wuthrich/facts/">
+    <h2 class="entry-title">Protein Structures by NMR</h2>
+    <p class="who">Kurt W&uuml;thrich</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">2002</div>
+      <div class="entry-body">Multidimensional NMR can pin down the three-dimensional fold of a protein in solution &mdash; the technique that won the 2002 Chemistry Nobel and complements X-ray crystallography across structural biology.</div>
+    </div>
+  </article>
+
+  <article class="entry discovery" data-year="2007" data-col="discoveries" id="d-exoplanet" data-connects-to="spectral-analysis fraunhofer" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Water on an Exoplanet</h2>
+    <p class="who">HST &amp; Spitzer teams</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">2007</div>
+      <div class="entry-body">When an exoplanet transits its star, a sliver of starlight passes through its atmosphere on the way to us, imprinting absorption features. Water vapour was first confirmed this way on HD 189733b &mdash; transit spectroscopy.</div>
+    </div>
+  </article>
+
+  <article class="entry discovery" data-year="2015" data-col="discoveries" id="d-ligo" data-connects-to="frequency-comb" tabindex="0" role="button" aria-haspopup="dialog" data-nobel-year="2017" data-nobel-url="https://www.nobelprize.org/prizes/physics/2017/summary/">
+    <h2 class="entry-title">Gravitational Waves at LIGO</h2>
+    <p class="who">LIGO Collaboration</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">2015</div>
+      <div class="entry-body">LIGO's km-scale interferometers must keep their lasers' frequency stable to parts in 10<sup>15</sup> &mdash; a stability borrowed directly from optical frequency-comb spectroscopy. The first detection of a binary black-hole merger was recorded on 14 September 2015.</div>
+    </div>
+  </article>
+
+  <article class="entry discovery" data-year="2019" data-col="discoveries" id="d-clocks" data-connects-to="quantum-logic frequency-comb" tabindex="0" role="button" aria-haspopup="dialog">
+    <h2 class="entry-title">Atomic Clocks at 10<sup>&minus;18</sup></h2>
+    <p class="who">NIST, JILA, RIKEN</p>
+    <div class="entry-detail" hidden>
+      <div class="entry-year-display">c. 2019</div>
+      <div class="entry-body">Optical clocks read out by quantum-logic spectroscopy or magic-wavelength lattices now achieve fractional uncertainties below 10<sup>&minus;18</sup> &mdash; sensitive enough to see general-relativistic time dilation across a 1 cm change in height.</div>
+    </div>
+  </article>
+
+  <!-- ERA BOUNDARY LINES (dotted, placed by JS) -->
+  <div class="era-line" data-year="500"  data-label="Medieval"></div>
+  <div class="era-line" data-year="1450" data-label="Renaissance"></div>
+  <div class="era-line" data-year="1700" data-label="Enlightenment"></div>
+  <div class="era-line" data-year="1850" data-label="Modern"></div>
+  <div class="era-line" data-year="1950" data-label="Contemporary"></div>
+
+  <!-- EVENT LINES (placed by JS) -->
+  <div class="event-line" data-year="1925">
+    <span class="event-line-label">Quantum Mechanics, 1925</span>
+  </div>
+  <div class="event-line" data-year="1960">
+    <a class="event-line-label" href="https://www.nature.com/articles/187493a0" target="_blank" rel="noopener" title="Maiman, T. H. — Stimulated Optical Radiation in Ruby (Nature, 1960)">The Ruby Laser, 1960</a>
+  </div>
+
+</main>
+
+<!-- Click-to-expand modal -->
+<div class="entry-modal" id="entryModal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="entry-modal-backdrop" data-close></div>
+  <div class="entry-modal-content" role="document">
+    <button class="entry-modal-close" data-close aria-label="Close">&times;</button>
+    <div class="entry-modal-year" id="modalYear"></div>
+    <h2 class="entry-modal-title" id="modalTitle"></h2>
+    <p class="entry-modal-who" id="modalWho"></p>
+    <div class="entry-modal-body" id="modalBody"></div>
+    <a class="entry-modal-nobel" id="modalNobel" hidden target="_blank" rel="noopener"></a>
+  </div>
+</div>
+
+<footer class="references">
+  <h2>References &amp; Further Reading</h2>
+  <ol>
+    <li id="ref1">Nicholson, P. T., &amp; Shaw, I. (eds.). <em>Ancient Egyptian Materials and Technology</em>. Cambridge University Press, 2000.</li>
+    <li id="ref2">Lindberg, D. C. <em>Theories of Vision from al-Kindi to Kepler</em>. University of Chicago Press, 1976.</li>
+    <li id="ref3">Needham, J. <em>Science and Civilisation in China</em>, Vol. 4, Pt. 1: Physics. Cambridge University Press, 1962.</li>
+    <li id="ref4">Cleomedes, <em>Lectures on Astronomy</em>, trans. A. C. Bowen &amp; R. B. Todd. University of California Press, 2004.</li>
+    <li id="ref5">Smith, A. M. <em>Ptolemy's Theory of Visual Perception: An English Translation of the </em>Optics. Trans. Am. Phil. Soc. 86 (2), 1996.</li>
+    <li id="ref6">Lindberg, D. C. <em>Roger Bacon and the Origins of </em>Perspectiva<em> in the Middle Ages</em>. Clarendon Press, 1996.</li>
+    <li id="ref7">Newton, I. "A Letter … containing his New Theory about Light and Colours." <em>Phil. Trans. R. Soc.</em> 6, 3075–3087 (1671/72).</li>
+    <li id="ref8">Wollaston, W. H. "A Method of Examining Refractive and Dispersive Powers, by Prismatic Reflection." <em>Phil. Trans. R. Soc.</em> 92, 365–380 (1802).</li>
+    <li id="ref9">Fraunhofer, J. "Bestimmung des Brechungs- und Farbenzerstreuungs-Vermögens verschiedener Glasarten." <em>Denkschriften der Königlichen Akademie der Wissenschaften zu München</em> 5, 193–226 (1814–15).</li>
+    <li id="ref10">Kirchhoff, G., &amp; Bunsen, R. "Chemische Analyse durch Spectralbeobachtungen." <em>Annalen der Physik</em> 186 (6), 161–189 (1860).</li>
+    <li id="ref11">Balmer, J. J. "Notiz über die Spectrallinien des Wasserstoffs." <em>Annalen der Physik</em> 261 (5), 80–87 (1885).</li>
+    <li id="ref12">Rydberg, J. R. "Recherches sur la constitution des spectres d'émission des éléments chimiques." <em>Kongl. Svenska Vetenskaps-Akademiens Handlingar</em> 23 (11), 1–177 (1889).</li>
+    <li id="ref13">Bohr, N. "On the Constitution of Atoms and Molecules." <em>Philosophical Magazine</em> 26 (151), 1–25 (1913).</li>
+    <li id="ref14">Raman, C. V., &amp; Krishnan, K. S. "A New Type of Secondary Radiation." <em>Nature</em> 121, 501–502 (1928).</li>
+    <li id="ref15">Purcell, E. M., Torrey, H. C., &amp; Pound, R. V. "Resonance Absorption by Nuclear Magnetic Moments in a Solid." <em>Phys. Rev.</em> 69, 37–38 (1946); Bloch, F., Hansen, W. W., &amp; Packard, M. "Nuclear Induction." <em>Phys. Rev.</em> 69, 127 (1946).</li>
+    <li id="ref16">Woodbury, E. J., &amp; Ng, W. K. "Ruby Laser Operation in the Near IR." <em>Proc. IRE</em> 50, 2367 (1962).</li>
+    <li id="ref17">Hall, J. L. "Nobel Lecture: Defining and Measuring Optical Frequencies." <em>Rev. Mod. Phys.</em> 78, 1279 (2006); Hänsch, T. W. "Nobel Lecture: Passion for Precision." <em>Rev. Mod. Phys.</em> 78, 1297 (2006).</li>
+    <li id="ref18">Schmidt, P. O., Rosenband, T., Langer, C., Itano, W. M., Bergquist, J. C., &amp; Wineland, D. J. "Spectroscopy Using Quantum Logic." <em>Science</em> 309, 749–752 (2005).</li>
+    <li id="ref19">Knoll, M., &amp; Ruska, E. "Das Elektronenmikroskop." <em>Zeitschrift für Physik</em> 78, 318–339 (1932).</li>
+    <li id="ref20">Hillier, J., &amp; Baker, R. F. "Microanalysis by Means of Electrons." <em>J. Appl. Phys.</em> 15, 663–675 (1944).</li>
+    <li id="ref21">Förster, T. "Zwischenmolekulare Energiewanderung und Fluoreszenz." <em>Annalen der Physik</em> 437, 55–75 (1948).</li>
+    <li id="ref22">Zeeman, P. "On the Influence of Magnetism on the Nature of the Light Emitted by a Substance." <em>Philosophical Magazine</em> 43 (262), 226–239 (1897).</li>
+    <li id="ref23">Stark, J. "Beobachtungen über den Effekt des elektrischen Feldes auf Spektrallinien." <em>Annalen der Physik</em> 348 (7), 965–983 (1914).</li>
+    <li id="ref24">Lamb, W. E., &amp; Retherford, R. C. "Fine Structure of the Hydrogen Atom by a Microwave Method." <em>Physical Review</em> 72, 241–243 (1947).</li>
+    <li id="ref25">Runge, E., &amp; Gross, E. K. U. "Density-Functional Theory for Time-Dependent Systems." <em>Physical Review Letters</em> 52, 997–1000 (1984).</li>
+    <li id="ref26">Brumer, P., &amp; Shapiro, M. "Control of unimolecular reactions using coherent light." <em>Chemical Physics Letters</em> 126, 541–546 (1986); Tannor, D. J., &amp; Rice, S. A. "Control of selectivity of chemical reaction via control of wave packet evolution." <em>J. Chem. Phys.</em> 83, 5013 (1985).</li>
+    <li id="ref27">Corkum, P. B. "Plasma perspective on strong-field multiphoton ionization." <em>Physical Review Letters</em> 71, 1994 (1993); Lewenstein, M. et al. "Theory of high-harmonic generation by low-frequency laser fields." <em>Physical Review A</em> 49, 2117 (1994).</li>
+    <li id="ref28">O'Keefe, A., &amp; Deacon, D. A. G. "Cavity ring-down optical spectrometer for absorption measurements using pulsed laser sources." <em>Review of Scientific Instruments</em> 59, 2544–2551 (1988).</li>
+    <li id="ref29">Nie, S., &amp; Emory, S. R. "Probing Single Molecules and Single Nanoparticles by Surface-Enhanced Raman Scattering." <em>Science</em> 275, 1102–1106 (1997); Kneipp, K. et al. "Single Molecule Detection Using Surface-Enhanced Raman Scattering." <em>Physical Review Letters</em> 78, 1667–1670 (1997).</li>
+    <li id="ref30">Anderson, M. H., Ensher, J. R., Matthews, M. R., Wieman, C. E., &amp; Cornell, E. A. "Observation of Bose-Einstein Condensation in a Dilute Atomic Vapor." <em>Science</em> 269, 198–201 (1995).</li>
+    <li id="ref31">Ahmadi, M. et al. (ALPHA Collaboration). "Observation of the 1S–2S transition in trapped antihydrogen." <em>Nature</em> 541, 506–510 (2017).</li>
+  </ol>
+  <p class="colophon">A growing web &mdash; click any card to read more. Built 2026.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
